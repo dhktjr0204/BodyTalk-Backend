@@ -1,4 +1,4 @@
-package Capstone.Bioproject.web.config.oauth.Mypage;
+package Capstone.Bioproject.web.Mypage;
 import Capstone.Bioproject.web.domain.dtos.MyInfoUpdateDto;
 import Capstone.Bioproject.web.domain.dtos.MypageResponseDto;
 import lombok.RequiredArgsConstructor;

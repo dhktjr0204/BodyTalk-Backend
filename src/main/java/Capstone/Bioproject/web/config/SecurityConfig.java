@@ -31,6 +31,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
     public HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository() {
         return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
+    
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

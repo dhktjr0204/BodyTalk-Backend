@@ -37,10 +37,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         //OAuth2UserService에서 빼온 attribute를 담을 클래스
         LoginApiAttributes attributes = LoginApiAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        User user = saveOrUpdate(attributes);
-
-        //세션에 유저 정보 저장
-        httpSession.setAttribute("user",new SessionUser(user));
+        User user = saveOrUpdate(attributes,registrationId);
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
@@ -49,10 +46,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
     }
 
-    private User saveOrUpdate(LoginApiAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail())
+    private User saveOrUpdate(LoginApiAttributes attributes, String APIid) {
+        User user = userRepository.findByEmailAndProvider(attributes.getEmail(),APIid)
                 .map(entity -> entity.update(attributes.getName()))//이름이 바뀌면 업뎃
-                .orElse(attributes.toEntity());
+                .orElse(attributes.toEntity(APIid));
 
         return userRepository.save(user);
     }

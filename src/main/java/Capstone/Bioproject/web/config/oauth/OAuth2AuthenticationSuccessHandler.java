@@ -2,9 +2,10 @@ package Capstone.Bioproject.web.config.oauth;
 
 import Capstone.Bioproject.web.config.jwt.JwtTokenProvider;
 import Capstone.Bioproject.web.config.oauth.util.CookieUtils;
+import Capstone.Bioproject.web.domain.User;
+import Capstone.Bioproject.web.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -20,18 +21,14 @@ import java.util.Optional;
 import static Capstone.Bioproject.web.config.oauth.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 
+@RequiredArgsConstructor
 @Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtTokenProvider tokenProvider;
-
+    private final UserRepository userRepository;
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
-
-    public OAuth2AuthenticationSuccessHandler(JwtTokenProvider tokenProvider, HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository) {
-        this.tokenProvider = tokenProvider;
-        this.httpCookieOAuth2AuthorizationRequestRepository = httpCookieOAuth2AuthorizationRequestRepository;
-    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -49,23 +46,37 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         //login한 사용자 목록
         OAuth2User oAuth2User=(OAuth2User) authentication.getPrincipal();
         String token="";
+        int isNew=999;
         if (oAuth2User.getAttribute("sub")!=null){//구글일 때
             token = tokenProvider.generateToken(authentication,oAuth2User.getAttribute("email"),"google");
+            //새로운 회원인지 아닌지 확인용
+            isNew=getisNew(oAuth2User.getAttribute("email"),"google");
+
         }
         else {//카카오톡일 때
             if(oAuth2User.getAttribute("email")==null) {
                 Map<String, Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
                 String email = (String) kakao_account.get("email");
                 token = tokenProvider.generateToken(authentication, email, "kakao");
+                isNew=getisNew(email,"kakao");
             }
             else{//네이버일 때
                 token = tokenProvider.generateToken(authentication,oAuth2User.getAttribute("email"),"naver");
+                isNew=getisNew(oAuth2User.getAttribute("email"),"naver");
             }
         }
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", token)
+                .queryParam("isNew", isNew)
                 .build().toUriString();
+    }
+
+    private int getisNew(String email, String provider){
+        User user=userRepository.findByEmailAndProvider(email,provider)
+                .orElseThrow(()->new IllegalArgumentException("해당 유저가 없습니다. email"+email));
+        int isNew=user.getIsnew();
+        return isNew;
     }
 
     protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {

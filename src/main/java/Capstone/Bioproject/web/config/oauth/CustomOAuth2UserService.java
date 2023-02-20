@@ -1,7 +1,6 @@
 package Capstone.Bioproject.web.config.oauth;
 
 import Capstone.Bioproject.web.config.oauth.dto.LoginApiAttributes;
-import Capstone.Bioproject.web.config.oauth.dto.SessionUser;
 import Capstone.Bioproject.web.domain.User;
 import Capstone.Bioproject.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +47,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private User saveOrUpdate(LoginApiAttributes attributes, String APIid) {
         User user = userRepository.findByEmailAndProvider(attributes.getEmail(),APIid)
-                .map(entity -> entity.update(attributes.getName()))//이름이 바뀌면 업뎃
+                .map(entity -> entity.update(attributes.getName(),0))//이름이 바뀌면 업뎃
                 .orElse(attributes.toEntity(APIid));
 
         return userRepository.save(user);

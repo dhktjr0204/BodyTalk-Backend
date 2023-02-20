@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -26,12 +26,19 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
+    //필터 거치면 안될 것들
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> {
+            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**");
+        };
+    }
+
     //요청이 들어오면 repository로 가서 authorization request를 저장한다.
     @Bean
     public HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository() {
         return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
-    
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,7 +51,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .httpBasic().disable()
 
                 .authorizeRequests()
-                .antMatchers ("/api/**", "/login/**", "/oauth2/**").permitAll ()
+                .antMatchers ("/main/**", "/login/**", "/oauth2/**").permitAll ()
                 .and()
 
                 .oauth2Login()

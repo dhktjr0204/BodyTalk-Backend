@@ -67,6 +67,7 @@ public class LoginApiAttributes {
                 .email(email)
                 .provider(provider)
                 .role(Role.USER)
+                .isnew(1)
                 .build();
     }
 }

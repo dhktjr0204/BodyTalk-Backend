@@ -19,18 +19,21 @@ public class User {
     private Long age;
     @Enumerated(EnumType.STRING)
     private Role role;;
+    private int isnew;
 
     @Builder
-    public User(Long id, String name, String email, String provider, Long age, Role role) {
+    public User(Long id, String name, String email, String provider, Long age, Role role, int isnew) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.provider=provider;
         this.age=age;
         this.role = role;
+        this.isnew=isnew;
     }
-    public User update(String name) {
+    public User update(String name,int isnew) {
         this.name = name;
+        this.isnew=isnew;
         return this;
     }
 

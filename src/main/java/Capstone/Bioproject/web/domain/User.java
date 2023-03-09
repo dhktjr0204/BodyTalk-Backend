@@ -31,16 +31,16 @@ public class User {
         this.role = role;
         this.isnew=isnew;
     }
-    public User update(String name,int isnew) {
-        this.name = name;
+    public User update(int isnew) {
         this.isnew=isnew;
         return this;
     }
 
-    public void update(String name, Long age, String sex) {
+    public void update(String name, Long age, String sex, int isnew) {
         this.name = name;
         this.age=age;
         this.sex=sex;
+        this.isnew=isnew;
     }
 
     public String getRoleKey() {

@@ -30,7 +30,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> {
-            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**");
+            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/medi/**");
         };
     }
 
@@ -51,7 +51,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .httpBasic().disable()
 
                 .authorizeRequests()
-                .antMatchers ("/main/**", "/login/**", "/oauth2/**").permitAll ()
+                .antMatchers ("/main/**", "/login/**", "/oauth2/**","/medi/**").permitAll ()
                 .and()
 
                 .oauth2Login()

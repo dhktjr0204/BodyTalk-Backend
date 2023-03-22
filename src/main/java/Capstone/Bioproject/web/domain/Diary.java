@@ -3,12 +3,14 @@ package Capstone.Bioproject.web.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name="diary")
 public class Diary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,14 +18,13 @@ public class Diary {
 
     @ManyToOne
     private User user;
-
     private String content;
-    private String disease;
+    private LocalDate date;
 
     @Builder
-    public Diary(User user,String content, String disease, String diseaseinfo) {
+    public Diary(User user,String content, LocalDate date) {
         this.user=user;
         this.content = content;
-        this.disease = disease;
+        this.date=date;
     }
 }

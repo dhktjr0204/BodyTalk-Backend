@@ -16,16 +16,13 @@ public class Content {
 
     @ManyToOne
     private User user;
-
     private String content;
-    private String disease;
-    private String diseaseinfo;
+    private Long disease;
 
     @Builder
-    public Content(User user,String content, String disease, String diseaseinfo) {
+    public Content(User user,String content, Long disease) {
         this.user=user;
         this.content = content;
         this.disease = disease;
-        this.diseaseinfo = diseaseinfo;
     }
 }

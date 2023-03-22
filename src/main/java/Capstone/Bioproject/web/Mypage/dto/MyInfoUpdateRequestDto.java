@@ -1,4 +1,4 @@
-package Capstone.Bioproject.web.domain.dtos;
+package Capstone.Bioproject.web.Mypage.dto;
 
 import lombok.Builder;
 import lombok.Data;

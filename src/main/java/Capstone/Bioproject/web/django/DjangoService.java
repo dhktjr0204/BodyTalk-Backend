@@ -1,9 +1,11 @@
 package Capstone.Bioproject.web.django;
 
 import Capstone.Bioproject.web.domain.Content;
+import Capstone.Bioproject.web.domain.Disease;
 import Capstone.Bioproject.web.domain.User;
-import Capstone.Bioproject.web.domain.dtos.DjangoResponseDto;
+import Capstone.Bioproject.web.django.dto.DjangoResponseDto;
 import Capstone.Bioproject.web.repository.ContentRepository;
+import Capstone.Bioproject.web.repository.DiseaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,20 +24,21 @@ import java.util.List;
 @Service
 public class DjangoService {
     private final ContentRepository contentRepository;
+    private final DiseaseRepository diseaseRepository;
+
     @Transactional
     public void save(User user, String content, DjangoResponseDto mainResponseDto){
+        String name=mainResponseDto.getDisease();
+        Disease disease=diseaseRepository.findByName(name);
         Content contents=
                 Content.builder()
                         .user(user)
-                        .disease(mainResponseDto.getDisease())
-                        .diseaseinfo(mainResponseDto.getDiseaseInfo())
+                        .disease(disease.getId())
                         .content(content)
                         .build();
         contentRepository.save(contents);
     }
-
     public DjangoResponseDto getDisease(String content){
-
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8000/medi";
 
@@ -60,22 +63,12 @@ public class DjangoService {
 
         // 응답 확인
         System.out.print("reponse : "+disease);
-        String diseaseInfo="머리가 아픈 것";
-        List<String> hospitals=new ArrayList<>();
-        hospitals.add("서울대 병원");
-        hospitals.add("삼성 병원");
+        Disease info=diseaseRepository.findByName(disease);
+        String diseaseInfo=info.getInfo();
+        String cause=info.getCause();
+        String type=info.getType();
 
-        return new DjangoResponseDto(disease, diseaseInfo, hospitals);
-        /*
-        //여기 머신러닝 써야할 부분
-        String disease="두통";
-        String diseaseInfo="머리가 아픈 것";
-        List<String> hospitals=new ArrayList<>();
-        hospitals.add("서울대 병원");
-        hospitals.add("삼성 병원");
-        //-----------------
-
-        return new DjangoResponseDto(disease,diseaseInfo,hospitals);*/
+        return new DjangoResponseDto(disease, diseaseInfo, cause, type);
     }
 
 

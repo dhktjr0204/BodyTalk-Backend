@@ -23,12 +23,10 @@ public class DiaryController {
     private final MypageService mypageService;
     private final DiaryService diaryService;
 
-    @GetMapping("/diary/{id}")
-    public ResponseEntity<Map<String, Boolean>> sendUserInfo(HttpServletRequest request, @PathVariable Long id
-            , @RequestBody DiaryRequestDto diaryRequestDto){
+    @GetMapping("/diary")
+    public ResponseEntity<Map<String, Boolean>> sendUserInfo(HttpServletRequest request, @RequestBody DiaryRequestDto diaryRequestDto){
         //사용자 정보 가져오기
-        //User user=mypageService.getUserInfo(request);
-        User user=userRepository.findById(id).orElseThrow();
+        User user=mypageService.getUserInfo(request);
         return diaryService.save(user, diaryRequestDto);
     }
 }

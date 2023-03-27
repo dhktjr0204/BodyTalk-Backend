@@ -6,6 +6,7 @@ import Capstone.Bioproject.web.domain.User;
 import Capstone.Bioproject.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static Capstone.Bioproject.web.config.oauth.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
-
+import static Capstone.Bioproject.web.config.oauth.HttpCookieOAuth2AuthorizationRequestRepository.OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME;
 
 @RequiredArgsConstructor
 @Component
@@ -41,8 +42,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
-        String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-
+        String targetUrl = redirectUri.orElse(getDefaultTargetUrl());;
         //login한 사용자 목록
         OAuth2User oAuth2User=(OAuth2User) authentication.getPrincipal();
         String token="";

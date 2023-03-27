@@ -16,7 +16,6 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -40,7 +39,7 @@ public class JwtTokenProvider {
                 .claim("auth",authorities)
                 .setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 * 300))
                 .signWith(key, SignatureAlgorithm.HS256)
-                .compact();//토큰 생성
+                .compact();
 
         }
 

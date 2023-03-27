@@ -66,7 +66,10 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler)
                 //로그아웃 추가기능 안되면 뺄 것
-                .and().logout().logoutSuccessUrl("/main").permitAll()
+                .and().logout()
+                .logoutUrl("/logout")
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/main").permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();

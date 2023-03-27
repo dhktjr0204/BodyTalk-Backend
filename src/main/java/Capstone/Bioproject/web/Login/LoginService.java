@@ -4,11 +4,18 @@ import Capstone.Bioproject.web.domain.User;
 import Capstone.Bioproject.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import javax.transaction.Transactional;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 @RequiredArgsConstructor
 @Service
 public class LoginService {
@@ -18,8 +25,13 @@ public class LoginService {
     @Value(("${naver.client-secret}"))
     private String naver_Secret;
     public void googleDelete(String access_Token){
-        String apiUrl="https://accounts.google.com/o/oauth2/revoke?token="+access_Token;
+        String apiUrl="https://accounts.google.com/o/oauth2/revoke?token={token}";
+        RestTemplate restTemplate = new RestTemplate();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apiUrl)
+                .queryParam("token", access_Token);
 
+        String response = restTemplate.postForObject(builder.toUriString(), null, String.class);
+        System.out.println(response);
     }
 
     public void naverDelete(String access_Token){
@@ -32,8 +44,6 @@ public class LoginService {
     }
     //카카오 탈퇴
     public void kakaoDelete(String access_Token) {
-        System.out.println("확인용");
-        System.out.println(access_Token);
         requestToServer("https://kapi.kakao.com/v1/user/unlink","POST","kakao",access_Token);
     }
     private void requestToServer(String apiURL,String method, String headStr, String access_Token){
@@ -45,7 +55,6 @@ public class LoginService {
             if(headStr!=null) {
                 conn.setRequestProperty("Authorization", "Bearer " + access_Token);
             }
-            System.out.println("보내기까지 성공");
             int responseCode = conn.getResponseCode();
             System.out.println("responseCode : " + responseCode);
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));

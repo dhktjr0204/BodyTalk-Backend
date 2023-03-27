@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     private final LoginService loginService;
     private final MypageService mypageService;
-
+/*
     @GetMapping("auth/logout")
     public String logout(HttpServletRequest request){
         User user = mypageService.getUserInfo(request);
@@ -29,23 +29,22 @@ public class LoginController {
             loginService.kakaoLogout(access_Token);
         }
         return "로그아웃 완료";
-    }
+    }*/
 
-    @PutMapping("/auth/delete")
+    @PutMapping("/delete")
     public String delete(HttpServletRequest request) {
         User user = mypageService.getUserInfo(request);
         String access_Token = getAccessToken(request);
-        System.out.println("확인용"+access_Token);
         if (user.getProvider().equals("kakao")) {
             loginService.kakaoDelete(access_Token);
-            loginService.delete(user);
         }
         else if(user.getProvider().equals("naver")){
             loginService.naverDelete(access_Token);
         }
         else{
-
+            loginService.googleDelete(access_Token);
         }
+        loginService.delete(user);
         return "탈퇴 완료";
     }
 

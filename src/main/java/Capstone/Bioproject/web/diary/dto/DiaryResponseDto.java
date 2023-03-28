@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -14,12 +14,14 @@ import java.util.List;
 public class DiaryResponseDto {
     private Long id;
     private String content;
-    private LocalDateTime date;
-    List<String> symptom;
+    private LocalDate date;
+    List<String> tag;
 
     @Builder
-    public static DiaryResponseDto of(Long id, String content, List<String> symptom){
-        return DiaryResponseDto.builder()
-                .id(id).content(content).symptom(symptom).build();
+    public DiaryResponseDto(Long id, String content,LocalDate date, List<String> tag){
+        this.id=id;
+        this.content=content;
+        this.date=date;
+        this.tag=tag;
     }
 }

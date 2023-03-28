@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Table(name="diarytag")
@@ -22,6 +23,10 @@ public class Diarytag {
     @Builder
     public Diarytag(Long diary, Long tag) {
         this.diary=diary;
+        this.tag=tag;
+    }
+
+    public void update(Long tag) {
         this.tag=tag;
     }
 }

@@ -19,12 +19,12 @@ public class MainService {
     public List<MainResponseDto> getDiseaseRank() {
         List<DiseaseRankInterface> diseaseRank = contentRepository.findDiseaseRank();
         List<MainResponseDto> result=new ArrayList<>();
-        Float sum_percent= Float.valueOf(0);
+        int sum_percent=0;
         for (DiseaseRankInterface i : diseaseRank){
             result.add(MainResponseDto.builder().name(i.getName()).percent(i.getPercent()).build());
-            sum_percent-=i.getPercent();
+            sum_percent+=i.getPercent();
         }
-        Float etc_percent=100-sum_percent;
+        int etc_percent=100-sum_percent;
         result.add(MainResponseDto.builder().name("기타").percent(etc_percent).build());
         return result;
     }

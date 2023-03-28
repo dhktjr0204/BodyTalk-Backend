@@ -14,7 +14,7 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     List<Content> findByUser(User user);
 
     @Query(value = "SELECT name,"+
-            " ROUND((COUNT(disease)/(SELECT COUNT(disease) FROM content)*100),2) AS percent\n" +
+            " ROUND((COUNT(disease)/(SELECT COUNT(disease) FROM content)*100)) AS percent\n" +
             "FROM content INNER JOIN disease ON content.disease=disease.disease_id\n" +
             "GROUP BY disease\n" +
             "ORDER BY COUNT(disease) DESC\n" +

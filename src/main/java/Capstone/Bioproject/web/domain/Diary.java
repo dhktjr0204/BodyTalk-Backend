@@ -27,4 +27,9 @@ public class Diary {
         this.content = content;
         this.date=date;
     }
+
+    public void update(String content, LocalDate date) {
+        this.content = content;
+        this.date=date;
+    }
 }

@@ -1,9 +1,15 @@
 package Capstone.Bioproject.web.Mypage;
 
+import Capstone.Bioproject.web.Login.AuthService;
+import Capstone.Bioproject.web.Mypage.dto.ContentResponseDto;
+import Capstone.Bioproject.web.Mypage.dto.DiseaseResponseDto;
+import Capstone.Bioproject.web.Mypage.dto.MypageResponseDto;
 import Capstone.Bioproject.web.domain.Content;
+import Capstone.Bioproject.web.domain.Disease;
 import Capstone.Bioproject.web.domain.User;
 import Capstone.Bioproject.web.Mypage.dto.MyInfoUpdateRequestDto;
 import Capstone.Bioproject.web.repository.ContentRepository;
+import Capstone.Bioproject.web.repository.DiseaseRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -11,21 +17,42 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 @RequiredArgsConstructor
 @Service
 public class MypageService {
     private final AuthService authService;
     private final ContentRepository contentRepository;
+    private final DiseaseRepository diseaseRepository;
 
     //최근 진료 기록 보기
     @Transactional
-    public List<Content> getMyContents(HttpServletRequest request) {
+    public MypageResponseDto getMyContents(HttpServletRequest request) {
         User user=authService.getMemberInfo(request);
         List<Content> contents = contentRepository.findByUser(user);
-        return contents;
+        List<ContentResponseDto> contentResponseDtos=new ArrayList<>();
+        for (Content content:contents){
+            ContentResponseDto content_build = ContentResponseDto.builder()
+                    .id(content.getId()).content(content.getContent())
+                    .disease(diseaseRepository.getById(content.getDisease()).getName()).build();
+            contentResponseDtos.add(content_build);
+        }
+        MypageResponseDto result = MypageResponseDto.builder().id(user.getId())
+                .name(user.getName()).content(contentResponseDtos).build();
+        return result;
+    }
+
+    @Transactional
+    public DiseaseResponseDto getContent(Long id){
+        Content content = contentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 기록이 없습니다.: " + id));
+        Disease disease_Info=diseaseRepository.getById(content.getDisease());
+        DiseaseResponseDto result = DiseaseResponseDto.builder().content(content.getContent())
+                .disease(disease_Info.getName())
+                .info(disease_Info.getInfo()).cause(disease_Info.getCause())
+                .type(disease_Info.getType()).build();
+        return result;
     }
 
     //마이페이지

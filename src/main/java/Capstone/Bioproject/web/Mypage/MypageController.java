@@ -1,4 +1,6 @@
 package Capstone.Bioproject.web.Mypage;
+import Capstone.Bioproject.web.Mypage.dto.DiseaseResponseDto;
+import Capstone.Bioproject.web.Mypage.dto.MypageResponseDto;
 import Capstone.Bioproject.web.domain.Content;
 import Capstone.Bioproject.web.domain.User;
 import Capstone.Bioproject.web.Mypage.dto.MyInfoUpdateRequestDto;
@@ -23,9 +25,13 @@ public class MypageController {
 
     //최근 기록 보기
     @GetMapping("/mypage/contents")
-    public List<Content> sendContents(HttpServletRequest request){
-        List<Content> userInfo=mypageService.getMyContents(request);
-        return userInfo;
+    public MypageResponseDto sendContents(HttpServletRequest request){
+        return mypageService.getMyContents(request);
+    }
+
+    @GetMapping("/mypage/{id}")
+    public DiseaseResponseDto sendContentDetail(@PathVariable Long id){
+        return mypageService.getContent(id);
     }
 
     //정보 수정

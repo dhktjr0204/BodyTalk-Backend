@@ -1,4 +1,4 @@
-package Capstone.Bioproject.web.Mypage;
+package Capstone.Bioproject.web.Login;
 
 import Capstone.Bioproject.web.config.jwt.JwtHeaderUtil;
 import Capstone.Bioproject.web.config.jwt.JwtTokenProvider;

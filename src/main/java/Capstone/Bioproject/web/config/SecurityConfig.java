@@ -1,6 +1,8 @@
 package Capstone.Bioproject.web.config;
 
+
 import Capstone.Bioproject.web.config.jwt.JwtAuthenticationFilter;
+import Capstone.Bioproject.web.config.jwt.JwtExceptionFilter;
 import Capstone.Bioproject.web.config.jwt.JwtTokenProvider;
 import Capstone.Bioproject.web.config.oauth.CustomOAuth2UserService;
 import Capstone.Bioproject.web.config.oauth.HttpCookieOAuth2AuthorizationRequestRepository;
@@ -25,12 +27,12 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-
+    private final JwtExceptionFilter jwtExceptionFilter;
     //필터 거치면 안될 것들
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> {
-            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/medi/**","/diary/**");
+            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/medi/**");
         };
     }
 
@@ -51,9 +53,8 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .httpBasic().disable()
 
                 .authorizeRequests()
-                .antMatchers ("/main/**", "/login/**", "/oauth2/**","/medi/**").permitAll ()
+                .antMatchers ( "/main/**","/login/**", "/oauth2/**","/medi/**").permitAll()
                 .and()
-
                 .oauth2Login()
                 .authorizationEndpoint().baseUri("/oauth2/authorize")
                 .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository())
@@ -65,13 +66,15 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler)
+
                 //로그아웃 추가기능 안되면 뺄 것
                 .and().logout()
                 .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/main").permitAll()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtExceptionFilter,JwtAuthenticationFilter.class);
         return http.build();
     }
 }

@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MainResponseDto {
     private String name;
-    private Float percent;
+    private int percent;
 
     @Builder
-    public MainResponseDto(String name, Float percent) {
+    public MainResponseDto(String name, int percent) {
         this.name = name;
         this.percent = percent;
     }
     @Builder
     public MainResponseDto(DiseaseRankInterface diseaseRankInterface){
         this.name=diseaseRankInterface.getName();
-        this.percent=diseaseRankInterface.getPercent();
+        this.percent=(int)diseaseRankInterface.getPercent();
     }
 }

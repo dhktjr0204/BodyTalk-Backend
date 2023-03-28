@@ -1,6 +1,6 @@
 package Capstone.Bioproject.web.django;
 
-import Capstone.Bioproject.web.Mypage.AuthService;
+import Capstone.Bioproject.web.Login.AuthService;
 import Capstone.Bioproject.web.domain.User;
 import Capstone.Bioproject.web.django.dto.DjangoResponseDto;
 import lombok.RequiredArgsConstructor;

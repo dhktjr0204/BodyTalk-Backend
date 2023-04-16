@@ -35,7 +35,8 @@ public class MypageService {
         for (Content content:contents){
             ContentResponseDto content_build = ContentResponseDto.builder()
                     .id(content.getId()).content(content.getContent())
-                    .disease(diseaseRepository.getById(content.getDisease()).getName()).build();
+                    .disease(diseaseRepository.getById(content.getDisease()).getName())
+                    .date(content.getDate()).build();
             contentResponseDtos.add(content_build);
         }
         MypageResponseDto result = MypageResponseDto.builder().id(user.getId())

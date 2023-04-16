@@ -23,35 +23,35 @@ public class DiaryController {
     private final MypageService mypageService;
     private final DiaryService diaryService;
 
-    @GetMapping("/diary")
+    @GetMapping("/api/diary")
     public List<DiaryResponseDto> getDiarys(HttpServletRequest request){
         User user=mypageService.getUserInfo(request);
         return diaryService.getAllOfDiary(user);
     }
 
-    @PostMapping("/diary")
+    @PostMapping("/api/diary")
     public ResponseEntity<Map<String, Boolean>> saveDiary(HttpServletRequest request, @RequestBody DiaryRequestDto diaryRequestDto){
         //사용자 정보 가져오기
         User user=mypageService.getUserInfo(request);
         return diaryService.save(user, diaryRequestDto);
     }
 
-    @GetMapping("/diary/{id}")
+    @GetMapping("/api/diary/{id}")
     public DiaryResponseDto getDiaryDetail(@PathVariable Long id){
         return diaryService.getDiary(id);
     }
 
-    @PostMapping("/diary/{id}")
+    @PostMapping("/api/diary/{id}")
     public ResponseEntity<Map<String,Boolean>> updateDiary(@PathVariable Long id, @RequestBody DiaryRequestDto diaryRequestDto){
         return diaryService.update(id,diaryRequestDto);
     }
 
-    @DeleteMapping("/diary/{id}")
+    @DeleteMapping("/api/diary/{id}")
     public ResponseEntity<Map<String,Boolean>> deleteDiary(@PathVariable Long id){
         return diaryService.delete(id);
     }
 
-    @GetMapping("/diary/chart")
+    @GetMapping("/api/diary/chart")
     public TypeResponseDto sendGraph(HttpServletRequest request, @RequestBody ChartRequestDto chartRequestDto){
         User user=mypageService.getUserInfo(request);
         return diaryService.sendGraph(user,chartRequestDto);

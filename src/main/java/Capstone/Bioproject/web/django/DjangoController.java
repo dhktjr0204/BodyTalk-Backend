@@ -16,7 +16,7 @@ public class DjangoController {
     private final AuthService authService;
     private final DjangoService mainService;
 
-    @PostMapping("/medi")
+    @PostMapping("/api/medi")
     public DjangoResponseDto save(HttpServletRequest request, @RequestPart(value = "content") String content){
         //로그인된 사용자인지 확인
         User user=authService.getMemberInfo(request);

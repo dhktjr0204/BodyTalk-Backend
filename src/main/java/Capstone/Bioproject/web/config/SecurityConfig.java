@@ -32,7 +32,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> {
-            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/medi/**");
+            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/api/medi/**","/api");
         };
     }
 
@@ -69,7 +69,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
 
                 //로그아웃 추가기능 안되면 뺄 것
                 .and().logout()
-                .logoutUrl("/logout")
+                .logoutUrl("/api/logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/main").permitAll()
                 .and()

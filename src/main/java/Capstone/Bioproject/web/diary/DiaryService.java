@@ -59,6 +59,9 @@ public class DiaryService {
         //태그 업데이트
         List<Diarytag> diarytags=new ArrayList<>();
         String[] tags=diaryRequestDto.getTags().split(",");
+
+        System.out.println(dateTime);
+
         for (String tag : tags){
             Long tagId=tagRepository.findBySymptom(tag).getId();
             List<Diarytag> byDiary = diaryTagRepository.findByDiary(id);

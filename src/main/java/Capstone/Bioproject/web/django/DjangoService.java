@@ -17,7 +17,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,8 +30,15 @@ public class DjangoService {
     private final ContentRepository contentRepository;
     private final DiseaseRepository diseaseRepository;
 
+    public LocalDate StringtoDate(String date){
+        DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateTime= LocalDate.parse(date,formatter);
+        return dateTime;
+    }
+
     @Transactional
     public void save(User user, String content, DjangoResponseDto mainResponseDto){
+        LocalDate date= StringtoDate(mainResponseDto.getDate());
         String name=mainResponseDto.getDisease();
         Disease disease=diseaseRepository.findByName(name);
         Content contents=
@@ -35,6 +46,7 @@ public class DjangoService {
                         .user(user)
                         .disease(disease.getId())
                         .content(content)
+                        .date(date)
                         .build();
         contentRepository.save(contents);
     }
@@ -67,8 +79,11 @@ public class DjangoService {
         String diseaseInfo=info.getInfo();
         String cause=info.getCause();
         String type=info.getType();
+        Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String now_dt = format.format(now);
 
-        return new DjangoResponseDto(disease, diseaseInfo, cause, type);
+        return new DjangoResponseDto(disease, diseaseInfo, cause, type, now_dt);
     }
 
 

@@ -17,31 +17,31 @@ import java.util.Map;
 public class MypageController {
     private final MypageService mypageService;
     //내 정보 보기
-    @GetMapping("/mypage")
+    @GetMapping("/api/mypage")
     public User sendUserInfo(HttpServletRequest request){
         User user=mypageService.getUserInfo(request);
         return user;
     }
 
     //최근 기록 보기
-    @GetMapping("/mypage/contents")
+    @GetMapping("/api/mypage/contents")
     public MypageResponseDto sendContents(HttpServletRequest request){
         return mypageService.getMyContents(request);
     }
 
-    @GetMapping("/mypage/{id}")
+    @GetMapping("/api/mypage/{id}")
     public DiseaseResponseDto sendContentDetail(@PathVariable Long id){
         return mypageService.getContent(id);
     }
 
     //정보 수정
-    @PostMapping("/mypage/update")
+    @PostMapping("/api/mypage/update")
     public ResponseEntity<Map<String, Boolean>> updateInfo(HttpServletRequest request, @RequestBody MyInfoUpdateRequestDto updateDto){
         return mypageService.updateInfo(request, updateDto);
     }
 
     //정보 삭제
-    @DeleteMapping("/mypage/{id}")
+    @DeleteMapping("/api/mypage/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteContent(HttpServletRequest request, @PathVariable Long id){
         return mypageService.deleteContent(request,id);
     }

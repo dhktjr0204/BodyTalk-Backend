@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class MainController {
     private final MainService mainService;
-    @GetMapping("/main")
+    @GetMapping("/api")
     public List<MainResponseDto> sendRank(){
         return mainService.getDiseaseRank();
     }

@@ -31,7 +31,7 @@ public class LoginController {
         return "로그아웃 완료";
     }*/
 
-    @PutMapping("/delete")
+    @PutMapping("/api/delete")
     public String delete(HttpServletRequest request) {
         User user = mypageService.getUserInfo(request);
         String access_Token = getAccessToken(request);

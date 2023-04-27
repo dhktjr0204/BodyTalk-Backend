@@ -51,7 +51,7 @@ public class DiaryController {
         return diaryService.delete(id);
     }
 
-    @GetMapping("/api/diary/chart")
+    @PostMapping("/api/diary/chart")
     public TypeResponseDto sendGraph(HttpServletRequest request, @RequestBody ChartRequestDto chartRequestDto){
         User user=mypageService.getUserInfo(request);
         return diaryService.sendGraph(user,chartRequestDto);

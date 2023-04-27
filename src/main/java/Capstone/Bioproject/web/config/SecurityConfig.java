@@ -32,7 +32,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> {
-            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/api/medi/**","/api");
+            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/api/medi/**","/api","/api/hospital");
         };
     }
 
@@ -66,12 +66,6 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler)
-
-                //로그아웃 추가기능 안되면 뺄 것
-                .and().logout()
-                .logoutUrl("/api/logout")
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/main").permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionFilter,JwtAuthenticationFilter.class);

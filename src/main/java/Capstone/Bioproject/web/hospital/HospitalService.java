@@ -16,6 +16,10 @@ public class HospitalService {
     //최근 진료 기록 보기
     @Transactional
     public List<Hospital> getMyContents(HospitalInfoDto hospitalInfoDto) {
-        return hospitalRepository.findByHospitalDistance(hospitalInfoDto.getType(),hospitalInfoDto.getLon(), hospitalInfoDto.getLat());
+        if(hospitalInfoDto.getType().equals("치과")){
+            return hospitalRepository.findByDentalDistance(hospitalInfoDto.getType(), hospitalInfoDto.getLon(), hospitalInfoDto.getLat());
+        }else {
+            return hospitalRepository.findByHospitalDistance(hospitalInfoDto.getType(), hospitalInfoDto.getLon(), hospitalInfoDto.getLat());
+        }
     }
 }

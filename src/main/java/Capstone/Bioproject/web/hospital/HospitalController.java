@@ -14,7 +14,6 @@ public class HospitalController {
     private final HospitalService hospitalService;
     @PostMapping("/api/hospital")
     public List<Hospital> getNearByHospital(@RequestBody HospitalInfoDto hospitalInfoDto){
-        System.out.println("확인용~~~~"+hospitalInfoDto.getType());
         return hospitalService.getMyContents(hospitalInfoDto);
     }
 }

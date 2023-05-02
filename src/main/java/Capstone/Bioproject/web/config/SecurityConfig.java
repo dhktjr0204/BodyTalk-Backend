@@ -32,7 +32,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> {
-            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/api/medi/**","/api","/api/hospital");
+            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/api/medi/**","/api","/api/hospital/**");
         };
     }
 

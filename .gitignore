@@ -42,5 +42,3 @@ src/main/resources/application.yml
 
 ### VS Code ###
 .vscode/
-
-resources/application.yml

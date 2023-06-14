@@ -50,7 +50,7 @@ public class DjangoService {
                         .build();
         contentRepository.save(contents);
     }
-    public DjangoResponseDto getDisease(String content){
+    public DjangoResponseDto getDisease(String content,String sex){
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8000/medi";
 
@@ -61,11 +61,12 @@ public class DjangoService {
         // 요청 데이터 셋팅
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
         map.add("content",content);
+        map.add("sex",sex);
 
         // header와 요청데이터 결합하여 요청 생성
-        HttpEntity<MultiValueMap<String,String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
-        System.out.println("==================== Django call (request) : " +  content + " ======================");
+        System.out.println("==================== Django call (request) : " +  content + "성별:"+sex+ " ======================");
         ResponseEntity<String> response = restTemplate.postForEntity(url,request, String.class);
         String result = response.getBody(); // 응답 받은 fno 출력
         System.out.println("==================== Django end ==========================");

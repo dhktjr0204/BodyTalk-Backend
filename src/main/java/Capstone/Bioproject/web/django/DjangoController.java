@@ -20,8 +20,12 @@ public class DjangoController {
     public DjangoResponseDto save(HttpServletRequest request, @RequestPart(value = "content") String content){
         //로그인된 사용자인지 확인
         User user=authService.getMemberInfo(request);
+        String sex="female";
+        if (user!=null){
+            sex=user.getSex();
+        }
         //추측 병명 및 가까운 병원 알려주기
-        DjangoResponseDto djangoResponseDto=mainService.getDisease(content);
+        DjangoResponseDto djangoResponseDto=mainService.getDisease(content,sex);
         if (user == null){//비로그인 사용자라면
             //바로 결과 알려주기
             return djangoResponseDto;

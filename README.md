@@ -1,4 +1,6 @@
 # 🏥 BodyTalk
+
+<div align="center">
    
 ### 프로젝트 소개
 사용자로부터 입력받은 증상을 바탕으로 예상되는 질병을 알려주는 서비스
@@ -14,6 +16,8 @@
 정지원 - Back-end, Front-end, AI
 <br>
 이성준 - Front-end
+
+</div>
 
 # 📚 기술스택
 

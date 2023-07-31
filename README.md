@@ -15,6 +15,8 @@
 <br>
 이성준 - Front-end
 
+<br><br>
+
 # 📚 기술스택
 
 <div align="center">

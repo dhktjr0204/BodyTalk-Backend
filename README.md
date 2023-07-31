@@ -1,5 +1,13 @@
 # BodyTalk
 
+
+# 🛠 기술스택
+
+<details>
+   <summary> 펼쳐보기👈</summary>
+<br />
+
+
 <div align="center">
    
 ### Languages
@@ -12,6 +20,8 @@
 <img alt="Git" src ="https://img.shields.io/badge/Git-F05032.svg?&style=for-the-badge&logo=Git&logoColor=white"/> <img alt="Notion" src ="https://img.shields.io/badge/Notion-000000.svg?&style=for-the-badge&logo=Notion&logoColor=white"/>
 
 </div>
+
+</details>
 
 ---
 

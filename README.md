@@ -34,10 +34,11 @@
 
 </div>
 
-# 📌 주요기능
-
 <details>
-   <summary> 펼쳐보기👈</summary>
+   <summary>
+      
+# 📌 주요기능
+   </summary>
    
 ## Web
 ### 회원가입 및 로그인

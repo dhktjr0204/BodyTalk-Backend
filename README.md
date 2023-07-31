@@ -115,25 +115,25 @@
 
    <br><br>
 
-   <img src="./img/cal.gif" alt="cal">
+   <img src="/img/cal.gif" alt="cal">
 
    달력에서 날짜를 선택해 증상 일기를 작성할 수 있습니다.
 
    <br><br>
 
-   <img src="./img/write.gif" alt="write">
+   <img src="/img/write.gif" alt="write">
 
    일기는 증상에 맞는 태그를 5개까지 선택해서 작성할 수 있습니다.
 
    <br><br>
 
-   <img src="./img/check.gif" alt="check">
+   <img src="/img/check.gif" alt="check">
 
    작성된 일기는 다시 볼 수 있고 수정할 수 있습니다.
 
    <br><br>
 
-   <img src="./img/check.gif" alt="check">
+   <img src="/img/check.gif" alt="check">
 
    증상 진단과 작성한 일기의 태그를 통해 만들어진 증상 통계와 부위 별 통계를 확인할 수 있습니다.
 
@@ -144,7 +144,7 @@
 ### 마이페이지
 
  <div align="center">
- <img src="./img/mypage.png" alt="mypage">
+ <img src="/img/mypage.png" alt="mypage">
 </div>
 
 내정보를 확인하고 수정할 수 있습니다.

@@ -8,6 +8,7 @@
 
 ### 멤버구성
 정지원 - Back-end, Front-end, AI
+<br>
 이성준 - Front-end
 
 

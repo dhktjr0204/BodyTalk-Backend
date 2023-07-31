@@ -166,7 +166,9 @@
 
 </details>
 
-# 📌 협업방식
+<br><br>
+
+# 📌 회의록 - Notion
 
 <details>
    <summary>

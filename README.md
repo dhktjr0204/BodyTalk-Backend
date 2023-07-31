@@ -38,7 +38,6 @@
 ## Web
 ### 회원가입 및 로그인
 
-
 <img src="/img/register.png" alt="register" style="width: 30%;">
 
 회원가입을 하게 되면 기본정보를 입력받게 됩니다. <br>

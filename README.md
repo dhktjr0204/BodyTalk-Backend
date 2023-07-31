@@ -52,6 +52,8 @@
    구글, 카카오, 네이버 로그인을 제공합니다. <br>
    로그인을 하게 되면 최근 진단결과, 증상 일기등의 기능을 사용할 수 있습니다.
 
+   <br><br>
+
 </div>
 
 ### 메인 화면 (진단 결과  순위)
@@ -62,6 +64,8 @@
 
    사용자들이 많이 진단받는 진단명들의 순위를 보여줍니다.
 
+   <br><br>
+
 </div>
 
 ### 증상 진단
@@ -71,6 +75,8 @@
    <img src="/img/diagnosis.gif" alt="diagnosis;">
 
    증상을 입력하면 Kobert 모델이 분석 후 유사도가 가장 높은 질병과 질병의 간략한 정보, 관련 병원을 추천합니다.
+
+   <br><br>
 
 </div>
 
@@ -89,10 +95,14 @@
    진료 과목을 선택한 뒤 지역명으로 병원찾기 버튼을 클릭하면 주소를 입력받는 창이 나타납니다.
    주소를 입력하면 주소와  가까운 병원을 찾아줍니다.
 
+   <br><br>
+
    <img src="/img/hospital3.gif" alt="hospital3">
    #병원 클릭gif
 
    나타난 병원들을 선택하게 되면 지도의 핀 색이 바뀝니다.
+
+   <br><br>
 
 </div>
 
@@ -101,25 +111,34 @@
 <div align="center">
    <img src="./img/diarylogin.png" alt="diarylogin">
 
-
    증상 일기는 로그인이 필요한 서비스 입니다.<br>
    로그인을 하지않고 diary를 클릭하면 위와 같은 메세지가 노출됩니다.
+
+   <br><br>
 
    <img src="./img/cal.gif" alt="cal">
 
    달력에서 날짜를 선택해 증상 일기를 작성할 수 있습니다.
 
+   <br><br>
+
    <img src="./img/write.gif" alt="write">
 
    일기는 증상에 맞는 태그를 5개까지 선택해서 작성할 수 있습니다.
+
+   <br><br>
 
    <img src="./img/check.gif" alt="check">
 
    작성된 일기는 다시 볼 수 있고 수정할 수 있습니다.
 
+   <br><br>
+
    <img src="./img/check.gif" alt="check">
 
    증상 진단과 작성한 일기의 태그를 통해 만들어진 증상 통계와 부위 별 통계를 확인할 수 있습니다.
+
+   <br><br>
 
 </div>
 

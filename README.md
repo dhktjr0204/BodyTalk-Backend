@@ -168,7 +168,7 @@
 
 <br><br>
 
-# 📌 회의록 - Notion
+# 📚 회의록 - Notion
 
 <details>
    <summary>

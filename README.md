@@ -20,8 +20,7 @@
 
 <details>
    <summary> 펼쳐보기👈</summary>
-<br />
-
+   
 ## Web
 ### 회원가입 및 로그인
 

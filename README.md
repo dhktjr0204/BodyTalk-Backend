@@ -98,36 +98,30 @@
 
 ### 증상 일기
 
- <div align="center">
- <img src="./img/diarylogin.png" alt="diarylogin">
+<div align="center">
+   <img src="./img/diarylogin.png" alt="diarylogin">
+
+
+   증상 일기는 로그인이 필요한 서비스 입니다.
+   로그인을 하지않고 diary를 클릭하면 위와 같은 메세지가 노출됩니다.
+
+   <img src="./img/cal.gif" alt="cal">
+
+   달력에서 날짜를 선택해 증상 일기를 작성할 수 있습니다.
+
+   <img src="./img/write.gif" alt="write">
+
+   일기는 증상에 맞는 태그를 5개까지 선택해서 작성할 수 있습니다.
+
+   <img src="./img/check.gif" alt="check">
+
+   작성된 일기는 다시 볼 수 있고 수정할 수 있습니다.
+
+   <img src="./img/check.gif" alt="check">
+
+   증상 진단과 작성한 일기의 태그를 통해 만들어진 증상 통계와 부위 별 통계를 확인할 수 있습니다.
+
 </div>
-
-증상 일기는 로그인이 필요한 서비스 입니다.
-로그인을 하지않고 diary를 클릭하면 위와 같은 메세지가 노출됩니다.
-
- <div align="center">
- <img src="./img/cal.gif" alt="cal">
-</div>
-
-달력에서 날짜를 선택해 증상 일기를 작성할 수 있습니다.
-
- <div align="center">
- <img src="./img/write.gif" alt="write">
-</div>
-
-일기는 증상에 맞는 태그를 5개까지 선택해서 작성할 수 있습니다.
-
- <div align="center">
- <img src="./img/check.gif" alt="check">
-</div>
-
-작성된 일기는 다시 볼 수 있고 수정할 수 있습니다.
-
- <div align="center">
- <img src="./img/check.gif" alt="check">
-</div>
-
-증상 진단과 작성한 일기의 태그를 통해 만들어진 증상 통계와 부위 별 통계를 확인할 수 있습니다.
 
 ### 마이페이지
 

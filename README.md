@@ -97,10 +97,11 @@
 ### 증상 일기
 
  <div align="center">
- <img src="./img/diarylogin.gif" alt="diarylogin">
+ <img src="./img/diarylogin.png" alt="diarylogin">
 </div>
 
 증상 일기는 로그인이 필요한 서비스 입니다.
+로그인을 하지않고 diary를 클릭하면 위와 같은 메세지가 노출됩니다.
 
  <div align="center">
  <img src="./img/cal.gif" alt="cal">

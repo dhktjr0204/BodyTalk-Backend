@@ -152,7 +152,13 @@
    <img src="/img/mypage.png" alt="mypage">
 
    내정보를 확인하고 수정할 수 있습니다.
+
+   <br><br>
+
+   <img src="/img/mypage.png" alt="mypage">
+   
    최근 진단받은 진료기록을 한 눈에 볼 수 있습니다.
+   진료기록을 선택하면 진단받은 내용을 상세하게 볼 수 있습니다.
 
 </div>
 

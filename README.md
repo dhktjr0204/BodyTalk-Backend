@@ -82,6 +82,7 @@
    
    진료 과목을 선택한 뒤 내 주변 병원찾기 버튼을 클릭하면 내 위치를 기반으로 가까운 병원을 찾아줍니다.
 
+   <br><br>
 
    <img src="/img/hospital2.gif" alt="hospital2">
 

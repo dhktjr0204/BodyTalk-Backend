@@ -30,7 +30,7 @@
 
 </div>
 
-# 🛠 주요기능
+# 📌 주요기능
 
 <details>
    <summary> 펼쳐보기👈</summary>

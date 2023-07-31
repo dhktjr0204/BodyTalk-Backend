@@ -39,14 +39,14 @@
 ### 회원가입 및 로그인
 
 <div align="center">
- <img src="/img/register.png" alt="register" style="width: 10%;">
+ <img src="/img/register.png" alt="register" style="width: 30%;">
 </div>
 
 회원가입을 하게 되면 기본정보를 입력받게 됩니다. <br>
 성별에 따라서 증상을 진단받을 때, 다른결과가 나옵니다.
 <br>
 <div align="center">
- <img src="/img/login.png" alt="login" style="width: 10%;">
+ <img src="/img/login.png" alt="login" style="width: 30%;">
 </div>
 
 구글, 카카오, 네이버 로그인을 제공합니다. <br>

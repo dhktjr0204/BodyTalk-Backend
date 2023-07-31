@@ -155,9 +155,9 @@
 
    <br><br>
 
-   <img src="/img/mypage.png" alt="mypage">
+   <img src="/img/mypage.gif" alt="mypage">
    
-   최근 진단받은 진료기록을 한 눈에 볼 수 있습니다.
+   최근 진단받은 진료기록을 한 눈에 볼 수 있습니다.<br>
    진료기록을 선택하면 진단받은 내용을 상세하게 볼 수 있습니다.
 
 </div>

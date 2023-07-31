@@ -39,7 +39,7 @@
 ### 회원가입 및 로그인
 
 <div align="center">
- <img src="./img/register.PNG" alt="register">
+ <img src="/img/register.png" alt="register">
 </div>
 
 회원가입을 하게 되면 기본정보를 입력받게 됩니다.

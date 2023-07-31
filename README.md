@@ -33,13 +33,12 @@
 <br><br>
 
 </div>
-
-<details>
-   <summary>
       
 # 📌 주요기능
+<details>
+   <summary>
+      펼쳐보기 👈
    </summary>
-   <hr>
    
 ## Web
 ### 회원가입 및 로그인

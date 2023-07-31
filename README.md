@@ -182,4 +182,10 @@
 
 ## 온라인 미팅
 
+<div align="center">
+
+   <img src="/img/notion.png" alt="notion">
+
+</div>
+
 </details>   

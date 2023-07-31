@@ -35,6 +35,7 @@
 </div>
       
 # 📌 주요기능
+
 <details>
    <summary>
       펼쳐보기 👈
@@ -164,3 +165,12 @@
 </div>
 
 </details>
+
+# 📌 협업방식
+
+<details>
+   <summary>
+      펼쳐보기 👈
+   </summary>
+
+</details>   

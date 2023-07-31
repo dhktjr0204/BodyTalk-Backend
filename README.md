@@ -147,11 +147,13 @@
 
 ### 마이페이지
 
- <div align="center">
- <img src="/img/mypage.png" alt="mypage">
-</div>
+<div align="center">
+   
+   <img src="/img/mypage.png" alt="mypage">
 
-내정보를 확인하고 수정할 수 있습니다.
-최근 진단받은 진료기록을 한 눈에 볼 수 있습니다.
+   내정보를 확인하고 수정할 수 있습니다.
+   최근 진단받은 진료기록을 한 눈에 볼 수 있습니다.
+
+</div>
 
 </details>

@@ -47,7 +47,7 @@
 성별에 따라서 증상을 진단받을 때, 다른결과가 나옵니다.
 
 <div align="center">
- <img src="./img/login.PNG" alt="login">
+ <img src="/img/login.png" alt="login">
 </div>
 
 구글, 카카오, 네이버 로그인을 제공합니다.  

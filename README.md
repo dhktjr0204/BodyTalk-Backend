@@ -37,9 +37,8 @@
 <details>
    <summary>
       
-# 📌 주요기능
+# 📌 주요기능<hr>
    </summary>
-# 
    
 ## Web
 ### 회원가입 및 로그인

@@ -57,42 +57,44 @@
 ### 메인 화면 (진단 결과  순위)
 
 <div align="center">
- <img src="/img/main.png" alt="main">
+   
+   <img src="/img/main.png" alt="main">
+
+   사용자들이 많이 진단받는 진단명들의 순위를 보여줍니다.
+
 </div>
-
-사용자들이 많이 진단받는 진단명들의 순위를 보여줍니다.
-
 ### 증상 진단
 
 <div align="center">
- <img src="./img/diagnosis.gif" alt="diagnosis">
+   
+   <img src="./img/diagnosis.gif" alt="diagnosis">
+
+   증상을 입력하면 Kobert 모델이 분석 후 유사도가 가장 높은 질병과 질병의 간략한 정보, 관련 병원을 추천합니다.
+
 </div>
-
-증상을 입력하면 Kobert 모델이 분석 후 유사도가 가장 높은 질병과 질병의 간략한 정보, 관련 병원을 추천합니다.
-
 ### 병원 찾기
 
- <div align="center">
- <img src="./img/hospital1.gif" alt="hospital1">
- #내 주변 병원찾기gif
+<div align="center">
+    
+   <img src="./img/hospital1.gif" alt="hospital1">
+    #내 주변 병원찾기gif
+   
+   진료 과목을 선택한 뒤 내 주변 병원찾기 버튼을 클릭하면 내 위치를 기반으로 가까운 병원을 찾아줍니다.
+
+
+   <img src="./img/hospital2.gif" alt="hospital2">
+   #지역명 병원찾기gif
+
+
+   진료 과목을 선택한 뒤 지역명으로 병원찾기 버튼을 클릭하면 주소를 입력받는 창이 나타납니다.
+   주소를 입력하면 주소와  가까운 병원을 찾아줍니다.
+
+   <img src="./img/hospital3.gif" alt="hospital3">
+   #병원 클릭gif
+
+   나타난 병원들을 선택하게 되면 지도의 핀 색이 바뀝니다.
+
 </div>
-
-진료 과목을 선택한 뒤 내 주변 병원찾기 버튼을 클릭하면 내 위치를 기반으로 가까운 병원을 찾아줍니다.
-
- <div align="center">
- <img src="./img/hospital2.gif" alt="hospital2">
- #지역명 병원찾기gif
-</div>
-
-진료 과목을 선택한 뒤 지역명으로 병원찾기 버튼을 클릭하면 주소를 입력받는 창이 나타납니다.
- 주소를 입력하면 주소와  가까운 병원을 찾아줍니다.
-
- <div align="center">
- <img src="./img/hospital3.gif" alt="hospital3">
- #병원 클릭gif
-</div>
-
-나타난 병원들을 선택하게 되면 지도의 핀 색이 바뀝니다.
 
 ### 증상 일기
 

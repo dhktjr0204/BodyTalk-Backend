@@ -64,7 +64,7 @@
 
 <div align="center">
    
-   <img src="/img/main.png" alt="main style="width: 80%;">
+   <img src="/img/main.png" alt="main" style="width: 80%;">
 
    사용자들이 많이 진단받는 진단명들의 순위를 보여줍니다.
 

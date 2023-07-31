@@ -102,7 +102,7 @@
    <img src="./img/diarylogin.png" alt="diarylogin">
 
 
-   증상 일기는 로그인이 필요한 서비스 입니다.
+   증상 일기는 로그인이 필요한 서비스 입니다.<br>
    로그인을 하지않고 diary를 클릭하면 위와 같은 메세지가 노출됩니다.
 
    <img src="./img/cal.gif" alt="cal">

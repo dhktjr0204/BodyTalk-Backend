@@ -149,7 +149,7 @@
 
 <div align="center">
    
-   <img src="/img/mypage.png" alt="mypage">
+   <img src="/img/mypage.png" alt="mypage" style="width: 68%;">
 
    내정보를 확인하고 수정할 수 있습니다.
 

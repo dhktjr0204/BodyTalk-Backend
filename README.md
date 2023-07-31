@@ -59,7 +59,7 @@
 ### 메인 화면 (진단 결과  순위)
 
 <div align="center">
- <img src="./img/main.PNG" alt="main">
+ <img src="/img/main.png" alt="main">
 </div>
 
 사용자들이 많이 진단받는 진단명들의 순위를 보여줍니다.

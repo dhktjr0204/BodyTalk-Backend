@@ -137,7 +137,7 @@
 
    <br><br>
 
-   <img src="/img/stat.png" alt="stat" style="width: 68%;">
+   <img src="/img/stat.png" alt="stat">
 
    증상 진단과 작성한 일기의 태그를 통해 만들어진 증상 통계와 부위 별 통계를 확인할 수 있습니다.
 
@@ -149,7 +149,7 @@
 
 <div align="center">
    
-   <img src="/img/mypage.png" alt="mypage" style="width: 68%;">
+   <img src="/img/mypage.png" alt="mypage">
 
    내정보를 확인하고 수정할 수 있습니다.
 

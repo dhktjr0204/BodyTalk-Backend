@@ -68,7 +68,7 @@
 
 <div align="center">
    
-   <img src="/img/diagnosis.gif" alt="diagnosis style="width: 100%;">
+   <img src="/img/diagnosis.gif" alt="diagnosis;">
 
    증상을 입력하면 Kobert 모델이 분석 후 유사도가 가장 높은 질병과 질병의 간략한 정보, 관련 병원을 추천합니다.
 

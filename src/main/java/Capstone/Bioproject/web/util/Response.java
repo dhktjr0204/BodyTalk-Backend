@@ -45,8 +45,8 @@ public class Response {
     }
 
     // 401
-    public static ResponseEntity<?> noContent(String message) {
-        return makeResponse(HttpStatus.NO_CONTENT, message, 0, null);
+    public static ResponseEntity<?> unauthorized(String message) {
+        return makeResponse(HttpStatus.UNAUTHORIZED, message, 0, null);
     }
 
     // 404

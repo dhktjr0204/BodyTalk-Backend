@@ -110,7 +110,7 @@ public class LoginService {
 
     public ResponseEntity<?> reissue(UserRequestDto reissue){
         if (!jwtTokenProvider.validateToken(reissue.getRefreshToken())){
-            return Response.badRequest("Refresh Token 정보가 유효하지 않습니다.");
+            return Response.unauthorized("Refresh Token 정보가 유효하지 않습니다.");
         }
         //Access Token에서 User email가져온다.
         Authentication authentication = jwtTokenProvider.getAuthentication(reissue.getAccessToken());
@@ -118,9 +118,9 @@ public class LoginService {
         //Redis에서 user email을 기반으로 저장된 Refresh Token 값을 가져온다.
         String refreshToken = redisUtil.get(authentication.getName());
         if (ObjectUtils.isEmpty(refreshToken)){
-            return Response.badRequest("잘못된 요청입니다.");
+            return Response.unauthorized("잘못된 요청입니다.");
         }if(!refreshToken.equals(reissue.getRefreshToken())){
-            return Response.badRequest("Refresh Token 정보가 일치하지 않습니다.");
+            return Response.unauthorized("Refresh Token 정보가 일치하지 않습니다.");
         }
         //새로운 Access토큰 생성
         TokenResponseDto tokenInfo = jwtTokenProvider.reGenerateToken(authentication,userInfo[0],userInfo[1],refreshToken);

@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
+@AllArgsConstructor
 public class TokenResponseDto {
     private String grantType;
 

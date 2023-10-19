@@ -1,16 +1,14 @@
 package Capstone.Bioproject.web.hospital.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class LocalDto {
     private Double lon;
     private Double lat;
-    @Builder
-    public LocalDto(Double lon, Double lat) {
-        this.lon=lon;
-        this.lat=lat;
-    }
 }

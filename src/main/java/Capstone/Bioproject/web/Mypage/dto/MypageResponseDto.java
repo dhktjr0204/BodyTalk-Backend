@@ -1,5 +1,6 @@
 package Capstone.Bioproject.web.Mypage.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,17 +8,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class MypageResponseDto {
     private Long id;
     private String name;
     private List<ContentResponseDto> content;
-
-    @Builder
-    public MypageResponseDto(Long id, String name, List<ContentResponseDto> content){
-        this.id=id;
-        this.name=name;
-        this.content=content;
-    }
-
 }

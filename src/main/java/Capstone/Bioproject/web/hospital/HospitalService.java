@@ -40,13 +40,18 @@ public class HospitalService {
     public LocalDto getMyCoordi(String local){
         String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="+local;
         HttpHeaders headers = new HttpHeaders();
+        //JSON형식의 요청
         headers.setContentType(MediaType.APPLICATION_JSON);
+        //인증키 설정
         headers.set("X-NCP-APIGW-API-KEY-ID", naver_Id);
         headers.set("X-NCP-APIGW-API-KEY", naver_key);
+        //JSON형식의 응답
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        //요청 본문과 헤더를 포함하는 HTTP생성
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-
+        //HTTP요청 실행
         RestTemplate restTemplate = new RestTemplate();
+        //응답은 ResponseEntity로 받는다
         ResponseEntity<String> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,

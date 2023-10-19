@@ -17,7 +17,7 @@ public class AuthService {
 
     public User getMemberInfo(HttpServletRequest request){
         //request로부터 token 값 뽑기
-        String token=JwtHeaderUtil.getAccessToken(request);
+        String token=JwtHeaderUtil.getAccessToken(request.getHeader("Authorization"));
 
         if (token==null){
             return null;

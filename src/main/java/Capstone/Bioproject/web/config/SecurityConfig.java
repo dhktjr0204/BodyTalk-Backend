@@ -1,6 +1,5 @@
 package Capstone.Bioproject.web.config;
 
-
 import Capstone.Bioproject.web.config.jwt.JwtAuthenticationFilter;
 import Capstone.Bioproject.web.config.jwt.JwtExceptionFilter;
 import Capstone.Bioproject.web.config.jwt.JwtTokenProvider;
@@ -8,7 +7,7 @@ import Capstone.Bioproject.web.config.oauth.CustomOAuth2UserService;
 import Capstone.Bioproject.web.config.oauth.HttpCookieOAuth2AuthorizationRequestRepository;
 import Capstone.Bioproject.web.config.oauth.OAuth2AuthenticationFailureHandler;
 import Capstone.Bioproject.web.config.oauth.OAuth2AuthenticationSuccessHandler;
-import Capstone.Bioproject.web.domain.enums.Role;
+import Capstone.Bioproject.web.config.oauth.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,18 +20,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @RequiredArgsConstructor
 @Configuration
-@EnableWebSecurity(debug = true)
-public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
+@EnableWebSecurity
+public class SecurityConfig {
+
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisUtil redisUtil;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final JwtExceptionFilter jwtExceptionFilter;
+
     //필터 거치면 안될 것들
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> {
-            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/api/medi/**","/api","/api/hospital/**");
+            web.ignoring().antMatchers("/images/**", "/js/**", "/css/**", "/main/**","/api/medi/**","/api","/api/hospital/**","/api/token");
         };
     }
 
@@ -42,18 +44,21 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
         return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.cors();
         http
-                .csrf().disable()
+                .formLogin().disable()
+                .httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
-                .formLogin().disable()
-                .httpBasic().disable()
-
                 .authorizeRequests()
-                .antMatchers ( "/main/**","/login/**", "/oauth2/**","/medi/**").permitAll()
+                .antMatchers ( "/api/medi/**","/api","/api/hospital/**","/api/token").permitAll()
+
+                //auth2.0설정
                 .and()
                 .oauth2Login()
                 .authorizationEndpoint().baseUri("/oauth2/authorize")
@@ -66,9 +71,11 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler)
+
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider,redisUtil), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionFilter,JwtAuthenticationFilter.class);
         return http.build();
     }
+
 }

@@ -1,7 +1,9 @@
 package Capstone.Bioproject.web.config.oauth;
 
 import Capstone.Bioproject.web.config.jwt.JwtTokenProvider;
+import Capstone.Bioproject.web.config.oauth.dto.TokenResponseDto;
 import Capstone.Bioproject.web.config.oauth.util.CookieUtils;
+import Capstone.Bioproject.web.config.oauth.util.RedisUtil;
 import Capstone.Bioproject.web.domain.User;
 import Capstone.Bioproject.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,6 +32,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private final JwtTokenProvider tokenProvider;
     private final UserRepository userRepository;
+    private final RedisUtil redisUtil;
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
@@ -45,13 +49,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());;
         //login한 사용자 목록
         OAuth2User oAuth2User=(OAuth2User) authentication.getPrincipal();
-        String token="";
+        TokenResponseDto token=null;
         int isNew=999;
         if (oAuth2User.getAttribute("sub")!=null){//구글일 때
             token = tokenProvider.generateToken(authentication,oAuth2User.getAttribute("email"),"google");
             //새로운 회원인지 아닌지 확인용
             isNew=getisNew(oAuth2User.getAttribute("email"),"google");
-
+            redisUtil.set(authentication.getName(),token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
         }
         else {//카카오톡일 때
             if(oAuth2User.getAttribute("email")==null) {
@@ -59,15 +63,17 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 String email = (String) kakao_account.get("email");
                 token = tokenProvider.generateToken(authentication, email, "kakao");
                 isNew=getisNew(email,"kakao");
+                redisUtil.set(authentication.getName(),token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
             }
             else{//네이버일 때
                 token = tokenProvider.generateToken(authentication,oAuth2User.getAttribute("email"),"naver");
                 isNew=getisNew(oAuth2User.getAttribute("email"),"naver");
+                redisUtil.set(authentication.getName(),token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
             }
         }
-
         return UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("token", token)
+                .queryParam("accessToken", token.getAccessToken())
+                .queryParam("refreshToken",token.getRefreshToken())
                 .queryParam("isNew", isNew)
                 .build().toUriString();
     }

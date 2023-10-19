@@ -1,15 +1,15 @@
 package Capstone.Bioproject.web.Login;
 
+import Capstone.Bioproject.web.Login.dto.UserRequestDto;
 import Capstone.Bioproject.web.Mypage.MypageService;
 import Capstone.Bioproject.web.config.jwt.JwtHeaderUtil;
 import Capstone.Bioproject.web.config.oauth.util.CookieUtils;
 import Capstone.Bioproject.web.domain.User;
 import Capstone.Bioproject.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,21 +19,16 @@ import javax.servlet.http.HttpSession;
 @RestController
 public class LoginController {
     private final LoginService loginService;
-    private final MypageService mypageService;
-/*
-    @GetMapping("auth/logout")
-    public String logout(HttpServletRequest request){
-        User user = mypageService.getUserInfo(request);
-        String access_Token = getAccessToken(request);
-        if (user.getProvider().equals("kakao")) {
-            loginService.kakaoLogout(access_Token);
-        }
-        return "로그아웃 완료";
-    }*/
+    private final AuthService authService;
+
+    @PostMapping("api/logout")
+    public ResponseEntity<?> logout(@RequestBody UserRequestDto userRequestDto){
+        return loginService.logout(userRequestDto);
+    }
 
     @PutMapping("/api/delete")
     public String delete(HttpServletRequest request) {
-        User user = mypageService.getUserInfo(request);
+        User user = authService.getMemberInfo(request);
         String access_Token = getAccessToken(request);
         if (user.getProvider().equals("kakao")) {
             loginService.kakaoDelete(access_Token);
@@ -46,6 +41,12 @@ public class LoginController {
         }
         loginService.delete(user);
         return "탈퇴 완료";
+    }
+
+    @PostMapping("/api/token")
+    public ResponseEntity<?> reissue(HttpServletRequest request, @RequestBody UserRequestDto userRequestDto){
+        User user = authService.getMemberInfo(request);
+        return loginService.reissue(userRequestDto,user);
     }
 
     public String getAccessToken(HttpServletRequest request){

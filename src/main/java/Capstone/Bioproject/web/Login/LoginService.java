@@ -108,12 +108,13 @@ public class LoginService {
         userRepository.delete(user);
     }
 
-    public ResponseEntity<?> reissue(UserRequestDto reissue,User user){
-        if (jwtTokenProvider.validateToken(reissue.getRefreshToken())){
+    public ResponseEntity<?> reissue(UserRequestDto reissue){
+        if (!jwtTokenProvider.validateToken(reissue.getRefreshToken())){
             return Response.badRequest("Refresh Token 정보가 유효하지 않습니다.");
         }
         //Access Token에서 User email가져온다.
         Authentication authentication = jwtTokenProvider.getAuthentication(reissue.getAccessToken());
+        String userInfo[]=authentication.getName().split(",");;
         //Redis에서 user email을 기반으로 저장된 Refresh Token 값을 가져온다.
         String refreshToken = redisUtil.get(authentication.getName());
         if (ObjectUtils.isEmpty(refreshToken)){
@@ -122,11 +123,10 @@ public class LoginService {
             return Response.badRequest("Refresh Token 정보가 일치하지 않습니다.");
         }
         //새로운 Access토큰 생성
-        TokenResponseDto tokenInfo = jwtTokenProvider.reGenerateToken(authentication,user.getEmail(),user.getProvider(),refreshToken);
+        TokenResponseDto tokenInfo = jwtTokenProvider.reGenerateToken(authentication,userInfo[0],userInfo[1],refreshToken);
 
         //RefreshToken Redis 업데이트
         redisUtil.set(authentication.getName(),tokenInfo.getRefreshToken(), Duration.ofMillis(tokenInfo.getRefreshTokenExpirationTime()));
-
         return Response.makeResponse(HttpStatus.OK, "토큰 재발급을 성공하였습니다.", 0, tokenInfo);
     }
 }

@@ -22,9 +22,6 @@ public class RedisUtil {
     //key를 기반으로 데이터 조회
     public String get(String key){
         String getKey = redisTemplate.opsForValue().get(key);
-        if (getKey==null){
-            return "false";
-        }
         return getKey;
     }
 

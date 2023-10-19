@@ -45,8 +45,7 @@ public class LoginController {
 
     @PostMapping("/api/token")
     public ResponseEntity<?> reissue(HttpServletRequest request, @RequestBody UserRequestDto userRequestDto){
-        User user = authService.getMemberInfo(request);
-        return loginService.reissue(userRequestDto,user);
+        return loginService.reissue(userRequestDto);
     }
 
     public String getAccessToken(HttpServletRequest request){

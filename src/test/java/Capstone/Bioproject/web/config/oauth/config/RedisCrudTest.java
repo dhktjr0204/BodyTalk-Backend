@@ -61,7 +61,7 @@ class RedisCrudTest {
         redisUtil.delete(KEY);
         String findValue=redisUtil.get(KEY);
         //then
-        assertThat(findValue).isEqualTo("false");
+        assertThat(findValue).isEqualTo(null);
     }
 
     @Test

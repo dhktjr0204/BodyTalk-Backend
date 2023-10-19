@@ -51,11 +51,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         OAuth2User oAuth2User=(OAuth2User) authentication.getPrincipal();
         TokenResponseDto token=null;
         int isNew=999;
+        String userInfo=null;
         if (oAuth2User.getAttribute("sub")!=null){//구글일 때
-            token = tokenProvider.generateToken(authentication,oAuth2User.getAttribute("email"),"google");
+            String email=oAuth2User.getAttribute("email");
+            token = tokenProvider.generateToken(authentication,email,"google");
             //새로운 회원인지 아닌지 확인용
             isNew=getisNew(oAuth2User.getAttribute("email"),"google");
-            redisUtil.set(authentication.getName(),token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
+            userInfo = email + ",google";
+            redisUtil.set(userInfo,token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
         }
         else {//카카오톡일 때
             if(oAuth2User.getAttribute("email")==null) {
@@ -63,12 +66,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 String email = (String) kakao_account.get("email");
                 token = tokenProvider.generateToken(authentication, email, "kakao");
                 isNew=getisNew(email,"kakao");
-                redisUtil.set(authentication.getName(),token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
+                userInfo = email + ",kakao";
+                redisUtil.set(userInfo,token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
             }
             else{//네이버일 때
                 token = tokenProvider.generateToken(authentication,oAuth2User.getAttribute("email"),"naver");
+                String email=oAuth2User.getAttribute("email");
                 isNew=getisNew(oAuth2User.getAttribute("email"),"naver");
-                redisUtil.set(authentication.getName(),token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
+                userInfo=email+",naver";
+                redisUtil.set(userInfo,token.getRefreshToken(), Duration.ofMillis(token.getRefreshTokenExpirationTime()));
             }
         }
         return UriComponentsBuilder.fromUriString(targetUrl)

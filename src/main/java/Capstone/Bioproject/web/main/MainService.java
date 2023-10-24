@@ -8,8 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -18,13 +19,19 @@ public class MainService {
     @Transactional
     public List<MainResponseDto> getDiseaseRank() {
         List<DiseaseRankInterface> diseaseRank = contentRepository.findDiseaseRank();
-        List<MainResponseDto> result=new ArrayList<>();
-        int sum_percent=0;
-        for (DiseaseRankInterface i : diseaseRank){
-            result.add(MainResponseDto.builder().name(i.getName()).percent(i.getPercent()).build());
-            sum_percent+=i.getPercent();
-        }
-        int etc_percent=100-sum_percent;
+        //AtomicInterger는 스트림 내부에서 안전하게 증가 시킬 수 있다.
+        AtomicInteger sum_percent= new AtomicInteger();
+        List<MainResponseDto> result = diseaseRank.stream()
+                .map(rank -> {
+                    sum_percent.addAndGet(rank.getPercent());
+                    return MainResponseDto
+                            .builder()
+                            .name(rank.getName())
+                            .percent(rank.getPercent()).build();
+                })
+                .collect(Collectors.toList());
+
+        int etc_percent=100- sum_percent.get();
         result.add(MainResponseDto.builder().name("기타").percent(etc_percent).build());
         return result;
     }

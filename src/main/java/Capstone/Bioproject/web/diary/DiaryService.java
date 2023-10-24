@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -40,12 +41,11 @@ public class DiaryService {
 
         String[] tags=diaryRequestDto.getTags().split(",");
         //태그 저장
-        List<Diarytag> diarytags=new ArrayList<>();
-        for (String tag : tags){
-            Long tagId=tagRepository.findBySymptom(tag).getId();
-            Diarytag diaryTag= Diarytag.builder().diary(diaryId).tag(tagId).build();
-            diarytags.add(diaryTag);
-        }
+        List<Diarytag> diarytags=Arrays.stream(tags)
+                .map(tag->{
+                    Long tagId=tagRepository.findBySymptom(tag).getId();
+                    return new Diarytag(diaryId,tagId);
+                }).collect(Collectors.toList());
         diaryTagRepository.saveAll(diarytags);
         return mypageService.makeResponse("save");
     }
@@ -57,22 +57,17 @@ public class DiaryService {
         Diary diary = diaryRepository.getById(id);
         diary.update(diaryRequestDto.getContent(),dateTime);
         //태그 업데이트
-        List<Diarytag> diarytags=new ArrayList<>();
         String[] tags=diaryRequestDto.getTags().split(",");
-
-        System.out.println(dateTime);
-
-        for (String tag : tags){
-            Long tagId=tagRepository.findBySymptom(tag).getId();
-            List<Diarytag> byDiary = diaryTagRepository.findByDiary(id);
-            //기존에 저장되어있던 태그 모두 삭제
-            for(Diarytag diarytag: byDiary){
-                diaryTagRepository.delete(diarytag);
-            }
-            //태그 다시 저장
-            Diarytag diaryTag= Diarytag.builder().diary(id).tag(tagId).build();
-            diarytags.add(diaryTag);
-        }
+        List<Diarytag> diarytags = Arrays.stream(tags)
+                .map(tag -> {
+                    Long tagId = tagRepository.findBySymptom(tag).getId();
+                    //수정할 다이어리
+                    List<Diarytag> byDiary = diaryTagRepository.findByDiary(id);
+                    //기존에 저장되어있던 태그 모드 삭제
+                    byDiary.forEach(diarytag -> diaryTagRepository.delete(diarytag));
+                    return new Diarytag(id, tagId);
+                })
+                .collect(Collectors.toList());
         diaryTagRepository.saveAll(diarytags);
         return mypageService.makeResponse("update");
     }
@@ -83,12 +78,12 @@ public class DiaryService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 글이 없습니다.: " + id));
 
         List<Diarytag> diarytags = diaryTagRepository.findByDiary(id);
-        List<String> tags=new ArrayList<>();
-        for (Diarytag tag: diarytags){
-            Tag tagInfo = tagRepository.findById(tag.getTag())
-                    .orElseThrow(() -> new IllegalArgumentException("해당 태그가 없습니다.: " + id));
-            tags.add(tagInfo.getSymptom());
-        }
+
+        List<String> tags = diarytags.stream()
+                .map(diarytag -> tagRepository.findById(diarytag.getTag())
+                        .orElseThrow(() -> new IllegalArgumentException("해당 태그가 없습니다.: " + id))
+                        .getSymptom())
+                .collect(Collectors.toList());
 
         DiaryResponseDto result = DiaryResponseDto.builder()
                 .id(id)
@@ -101,26 +96,23 @@ public class DiaryService {
 
     @Transactional
     public List<DiaryResponseDto> getAllOfDiary(User user){
-        List<Diary> Diarys = diaryRepository.findByUser(user);
+        List<Diary> diarys = diaryRepository.findByUser(user);
 
-        List<DiaryResponseDto> result=new ArrayList<>();
-        for(Diary diary: Diarys) {
-            List<String> tags=new ArrayList<>();
+        List<DiaryResponseDto> result = diarys.stream()
+                .map(diary -> {
+                    List<String> tags = diaryTagRepository.findByDiary(diary.getId()).stream()
+                            .map(diarytag -> tagRepository.findById(diarytag.getTag())
+                                    .orElseThrow(() -> new IllegalArgumentException("해당 태그가 없습니다.: "))
+                                    .getSymptom())
+                            .collect(Collectors.toList());
+                    return DiaryResponseDto.builder()
+                            .id(diary.getId())
+                            .content(diary.getContent())
+                            .date(diary.getDate())
+                            .tag(tags).build();
+                })
+                .collect(Collectors.toList());
 
-            List<Diarytag> diarytags = diaryTagRepository.findByDiary(diary.getId());
-            for (Diarytag tag : diarytags) {
-                Tag tagInfo = tagRepository.findById(tag.getTag())
-                        .orElseThrow(() -> new IllegalArgumentException("해당 태그가 없습니다.: "));
-                tags.add(tagInfo.getSymptom());
-            }
-            DiaryResponseDto build = DiaryResponseDto.builder()
-                    .id(diary.getId())
-                    .content(diary.getContent())
-                    .date(diary.getDate())
-                    .tag(tags).build();
-
-            result.add(build);
-        }
         return result;
     }
 
@@ -138,18 +130,20 @@ public class DiaryService {
         List<SymptomRankInterface> SymtomTop3
                 =diaryRepository.findSymptomRank(user.getId(), chartRequestDto.getStart(), chartRequestDto.getEnd());
 
-        List<ChartResponseDto> Symptomresult=new ArrayList<>();
-        //증상 별 다이어리 날짜 뽑기
-        for (SymptomRankInterface i: SymtomTop3){
-            List<LocalDate> dates=new ArrayList<>();
-            SymptomRankInterface symptom = i;
-            List<DateInterface> symptomDate = diaryRepository.findSymtomDate(user.getId(),
-                    chartRequestDto.getStart(), chartRequestDto.getEnd(), symptom.getSymptom());
-            for (DateInterface date: symptomDate){
-                dates.add(date.getDate());
-            }
-            Symptomresult.add(ChartResponseDto.builder().symtomRank(symptom.getSymptom()).dates(dates).build());
-        }
+        List<ChartResponseDto> Symptomresult = SymtomTop3.stream()
+                .map(symptom -> {
+                    List<LocalDate> dates = diaryRepository.findSymtomDate(user.getId(),
+                                    chartRequestDto.getStart(), chartRequestDto.getEnd(), symptom.getSymptom())
+                            .stream()
+                            .map(DateInterface::getDate)
+                            .collect(Collectors.toList());
+                    return ChartResponseDto.builder()
+                            .symtomRank(symptom.getSymptom())
+                            .dates(dates)
+                            .build();
+                })
+                .collect(Collectors.toList());
+
         List<TypeInterface> types=diaryRepository.findType(user.getId(),chartRequestDto.getStart(), chartRequestDto.getEnd());
         TypeResponseDto result = TypeResponseDto.builder().symptomInfo(Symptomresult).typeInfo(types).build();
         return result;

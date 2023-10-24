@@ -65,9 +65,6 @@ public class LoginService {
                 "&client_secret="+naver_Secret+"&access_token="+access_Token+"&service_provider=NAVER";
         requestToServer(apiUrl,"GET",null,access_Token);
     }
-    public void kakaoLogout(String access_Token){
-        requestToServer("https://kapi.kakao.com/v1/user/logout","POST","kakao",access_Token);
-    }
     //카카오 탈퇴
     public void kakaoDelete(String access_Token) {
         requestToServer("https://kapi.kakao.com/v1/user/unlink","POST","kakao",access_Token);

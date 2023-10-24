@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -31,16 +32,16 @@ public class MypageService {
     public MypageResponseDto getMyContents(HttpServletRequest request) {
         User user=authService.getMemberInfo(request);
         List<Content> contents = contentRepository.findByUser(user);
-        List<ContentResponseDto> contentResponseDtos=new ArrayList<>();
-        for (Content content:contents){
-            ContentResponseDto content_build = ContentResponseDto.builder()
-                    .id(content.getId()).content(content.getContent())
-                    .disease(diseaseRepository.getById(content.getDisease()).getName())
-                    .date(content.getDate()).build();
-            contentResponseDtos.add(content_build);
-        }
+        List<ContentResponseDto> contentResponseDto= contents.stream()
+                .map(content -> {
+                    return ContentResponseDto.builder()
+                            .id(content.getId()).content(content.getContent())
+                            .disease(diseaseRepository.getById(content.getDisease()).getName())
+                            .date(content.getDate()).build();
+                })
+                .collect(Collectors.toList());
         MypageResponseDto result = MypageResponseDto.builder().id(user.getId())
-                .name(user.getName()).content(contentResponseDtos).build();
+                .name(user.getName()).content(contentResponseDto).build();
         return result;
     }
 

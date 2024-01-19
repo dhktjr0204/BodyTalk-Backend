@@ -192,4 +192,4 @@
 
 <br><br>
 # ERD
-<img src="/img/erd.png" alt="erd">
+<img src="/img/ERD.png" alt="erd">

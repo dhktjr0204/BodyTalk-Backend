@@ -173,7 +173,6 @@
 </details>
 
 <br><br>
-
 # 🗒 회의록 - Notion
 
 <details>
@@ -189,4 +188,8 @@
 
 </div>
 
-</details>   
+</details> 
+
+<br><br>
+# ERD
+<img src="/img/erd.png" alt="erd">

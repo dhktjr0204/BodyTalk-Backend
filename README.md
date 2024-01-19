@@ -29,11 +29,18 @@
 
 ### Collaboration Tool
 <img alt="Git" src ="https://img.shields.io/badge/Git-F05032.svg?&style=for-the-badge&logo=Git&logoColor=white"/> <img alt="Notion" src ="https://img.shields.io/badge/Notion-000000.svg?&style=for-the-badge&logo=Notion&logoColor=white"/>
+</div>
+      
+<br><br>
+# 🛠 아키텍처
+<img src="/img/아키텍처 설계도.png" alt="architecture">
+<br><br>
+
+# 🗂 DB 구성도
+<img src="/img/ERD.png" alt="erd">
 
 <br><br>
 
-</div>
-      
 # 📌 주요기능
 
 <details>
@@ -189,7 +196,3 @@
 </div>
 
 </details> 
-
-<br><br>
-# ERD
-<img src="/img/ERD.png" alt="erd">

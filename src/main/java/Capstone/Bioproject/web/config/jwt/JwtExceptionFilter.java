@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JwtExceptionFilter extends OncePerRequestFilter {
+public class
+JwtExceptionFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {

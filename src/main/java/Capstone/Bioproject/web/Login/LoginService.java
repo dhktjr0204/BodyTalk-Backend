@@ -55,9 +55,6 @@ public class LoginService {
         RestTemplate restTemplate = new RestTemplate();
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(apiUrl)
                 .queryParam("token", access_Token);
-
-        String response = restTemplate.postForObject(builder.toUriString(), null, String.class);
-        System.out.println(response);
     }
 
     public void naverDelete(String access_Token){

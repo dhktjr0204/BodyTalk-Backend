@@ -18,11 +18,12 @@ public class User {
     private String sex;
     private Long age;
     @Enumerated(EnumType.STRING)
-    private Role role;;
+    private Role role;
     private int isnew;
+    private String token;
 
     @Builder
-    public User(Long id, String name, String email, String provider, Long age, Role role, int isnew) {
+    public User(Long id, String name, String email, String provider, Long age, Role role, int isnew, String token) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -30,9 +31,11 @@ public class User {
         this.age=age;
         this.role = role;
         this.isnew=isnew;
+        this.token=token;
     }
-    public User update(int isnew) {
+    public User update(int isnew, String token) {
         this.isnew=isnew;
+        this.token=token;
         return this;
     }
 

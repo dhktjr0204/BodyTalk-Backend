@@ -61,13 +61,14 @@ public class LoginApiAttributes {
                 .build();
     }
 //User 엔티티 생성 OAuthAttribute에서 엔티티를 생성하는 시점은 처음 가입할 때
-    public User toEntity(String provider) {
+    public User toEntity(String provider,String token) {
         return User.builder()
                 .name(name)
                 .email(email)
                 .provider(provider)
                 .role(Role.USER)
                 .isnew(1)
+                .token(token)
                 .build();
     }
 }

@@ -78,7 +78,7 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-        // Refresh Token 생성
+
         String newRefreshToken = refreshToken;
 
         return TokenResponseDto.builder()

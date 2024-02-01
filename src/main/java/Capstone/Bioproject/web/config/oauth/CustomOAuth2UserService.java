@@ -14,10 +14,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
 @RequiredArgsConstructor
@@ -25,8 +21,6 @@ import java.util.Collections;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final UserRepository userRepository;
-    private final HttpSession httpSession;
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
@@ -40,11 +34,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         //탈퇴 위한 인증 토큰
         String accessToken = userRequest.getAccessToken().getTokenValue();
-        httpSession.setAttribute("access_Token", accessToken);
 
         //OAuth2UserService에서 빼온 attribute를 담을 클래스
         LoginApiAttributes attributes = LoginApiAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-        User user = saveOrUpdate(attributes,registrationId);
+        User user = saveOrUpdate(attributes,registrationId, accessToken);
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
                 attributes.getAttributes(),
@@ -52,11 +45,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
     }
 
-    private User saveOrUpdate(LoginApiAttributes attributes, String APIid) {
+    private User saveOrUpdate(LoginApiAttributes attributes, String APIid,String token) {
         User user = userRepository.findByEmailAndProvider(attributes.getEmail(),APIid)
-                .map(entity -> entity.update(0))//새로운 유저가 아니면 0으로 바꾸기
-                .orElse(attributes.toEntity(APIid));
-
+                .map(entity -> entity.update(0,token))//새로운 유저가 아니면 0으로 바꾸기
+                .orElse(attributes.toEntity(APIid,token));
         return userRepository.save(user);
     }
 }
